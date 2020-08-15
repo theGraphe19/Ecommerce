@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('USER Dashboard') }}</div>
+                <div class="card-header">{{ __('ADMIN Dashboard') }}</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -13,7 +13,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
+                    
                     @component('components.who')
                     @endcomponent
                 </div>

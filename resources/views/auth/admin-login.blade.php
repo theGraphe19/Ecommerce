@@ -5,7 +5,9 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('ADMIN Login') }}</div>
+                <div class="card-header">{{ __('ADMIN Login') }}
+                    <span style="float: right;">or <a href="{{ route('admin.register') }}">Sign up?</a></span>
+                </div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('admin.login.submit') }}">

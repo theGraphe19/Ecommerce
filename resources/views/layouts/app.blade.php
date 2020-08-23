@@ -37,6 +37,9 @@
                     </ul>
 
                     <!-- Right Side Of Navbar -->
+                    @php
+                        $url = url()->current();
+                    @endphp
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
@@ -53,7 +56,7 @@
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
-                                @if(Auth::guard('admin'))
+                                @if(strpos($url, 'admin') !== false)
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a href="{{ route('admin.logout') }}"
                                         class="btn btn-light"

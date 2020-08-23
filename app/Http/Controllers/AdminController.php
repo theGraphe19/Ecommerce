@@ -14,7 +14,7 @@ class AdminController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:admin')->except('regapp', 'loginapp', 'storeAbout', 'aboutusapp');
+        $this->middleware('auth:admin')->except(['regapp', 'loginapp', 'storeAbout', 'aboutusapp']);
     }
 
     /**

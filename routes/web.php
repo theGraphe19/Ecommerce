@@ -30,3 +30,10 @@ Route::prefix('/admin')->group( function(){
     Route::get('/register', 'Auth\AdminRegisterController@showRegisterForm')->name('admin.register');
     Route::post('/register', 'Auth\AdminRegisterController@register')->name('admin.register.submit');
 });
+
+Route::prefix('/app')->group( function(){
+    Route::post('/reg', 'AdminController@regapp');
+    Route::post('/login', 'AdminController@loginapp');
+    Route::post('/aboutsave', 'AdminController@storeAbout');
+    Route::get('/aboutusapp', 'AdminController@aboutusapp');
+});

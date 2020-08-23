@@ -26,4 +26,9 @@ class AdminController extends Controller
     {
         return view('admin');
     }
+
+    public function aboutusapp(){
+        $admin = Admin::first();
+        return response()->json($admin);
+    }
 }

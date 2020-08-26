@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Hashing\BcryptHasher;
 use Illuminate\Http\Request;
@@ -82,17 +83,41 @@ class AdminController extends Controller
     public function aboutussaveadm(Request $request){
         $admins = Admin::all();
 
+        $this->validate($request, [
+            'about_us' => 'required',
+            'about_us_img' => 'required|file',
+        ]);
+
+        if($request->hasFile('about_us_img')) {
+            $file = $request->about_us_img;
+            //Get file name with the extension
+            $fileNameWithExt = $file->getClientOriginalName();
+            // echo $fileNameWithExt;
+
+            //Get just Filename
+            $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+
+            //Get just Extension
+            $extension = $file->getClientOriginalExtension();
+
+            // Filename to store
+            $fileNameToStore = $filename.'_'.time().'.'.$extension;
+
+            //Upload Image
+            // $path = $file->storeAs('product_images', $fileNameToStore);
+            Storage::disk('local')->putFileAs('about_us', $file, $fileNameToStore);
+        }
         foreach($admins as $admin){
             $admin->about_us = $request->input('about_us');
-            $admin->about_us_img = $request->input('about_us_img');
+            $admin->about_us_img = $fileNameToStore;
             $admin->save();
         }
         return response()->json(['status' => 'success', 'message' => 'Saved succesfully'], 200);
+        // return response()->json($fileNameToStore);
     }
 
     public function aboutusadmapp(){
         $admin = Admin::first();
         return response()->json(['about_us'=>$admin->about_us , 'about_us_img'=>$admin->about_us_img]);
-        // return csrf_token();
     }
 }

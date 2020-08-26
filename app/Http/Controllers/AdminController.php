@@ -92,7 +92,7 @@ class AdminController extends Controller
 
     public function aboutusadmapp(){
         $admin = Admin::first();
-        // return response()->json($admin);
-        return csrf_token();
+        return response()->json(['about_us'=>$admin->about_us , 'about_us_img'=>$admin->about_us_img]);
+        // return csrf_token();
     }
 }

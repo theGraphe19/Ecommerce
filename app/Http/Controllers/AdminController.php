@@ -32,6 +32,8 @@ class AdminController extends Controller
 
     public function regadmapp(Request $request){
 
+        $adm = Admin::first();
+
         $this->validate($request, [
             'name' => 'required|regex:/^[A-Za-z ]+$/',
             'phone' => 'required|min:8|max:10|unique:admins|regex:/^[0-9]+$/',
@@ -52,8 +54,8 @@ class AdminController extends Controller
             'password' => $password,
             'status' => 1,
             'api_token' => Str::random(60),
-            'about_us' => "About Us",
-            'about_us_img' => "About Us Image",
+            'about_us' => $adm->about_us,
+            'about_us_img' => $adm->about_us_img,
         ]);
 
         $admin->save();

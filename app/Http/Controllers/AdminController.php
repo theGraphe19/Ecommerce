@@ -52,6 +52,8 @@ class AdminController extends Controller
             'password' => $password,
             'status' => 1,
             'api_token' => Str::random(60),
+            'about_us' => "About Us",
+            'about_us_img' => "About Us Image",
         ]);
 
         $admin->save();

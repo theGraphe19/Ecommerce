@@ -104,7 +104,6 @@ class AdminController extends Controller
             $fileNameToStore = $filename.'_'.time().'.'.$extension;
 
             //Upload Image
-            // $path = $file->storeAs('product_images', $fileNameToStore);
             Storage::disk('local')->putFileAs('about_us', $file, $fileNameToStore);
         }
         foreach($admins as $admin){
@@ -118,6 +117,7 @@ class AdminController extends Controller
 
     public function aboutusadmapp(){
         $admin = Admin::first();
-        return response()->json(['about_us'=>$admin->about_us , 'about_us_img'=>$admin->about_us_img]);
+        $img = "http://developers.thegraphe.com/ecommerce/storage/app/about_us/" . $admin->about_us_img;
+        return response()->json(['about_us'=>$admin->about_us , 'about_us_img'=>$img]);
     }
 }

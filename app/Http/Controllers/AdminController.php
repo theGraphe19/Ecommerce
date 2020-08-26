@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Hashing\BcryptHasher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Admin;
 
 class AdminController extends Controller
@@ -14,7 +17,7 @@ class AdminController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:admin')->except(['regapp', 'loginapp', 'storeAbout', 'aboutusapp']);
+        $this->middleware('auth:admin')->except('loginadmapp', 'regadmapp', 'aboutusadmapp', 'aboutussaveadm');
     }
 
     /**
@@ -27,7 +30,7 @@ class AdminController extends Controller
         return view('admin');
     }
 
-    public function regapp(Request $request){
+    public function regadmapp(Request $request){
 
         $this->validate($request, [
             'name' => 'required|regex:/^[A-Za-z ]+$/',
@@ -55,12 +58,12 @@ class AdminController extends Controller
         return response()->json(['status' => 'success', 'message' => 'You are registered'], 200);
     }
 
-    public function loginapp(Request $request){
+    public function loginadmapp(Request $request){
 
         $admin = Admin::where('email', $request->input('email'))->first();
 
         if(!$admin) {
-            return response()->json(['status' => 'error', 'message' => 'User not found'], 401);
+            return response()->json(['status' => 'error', 'message' => 'Admin not found'], 401);
         }
 
         $pass = $request->input('password');
@@ -72,7 +75,7 @@ class AdminController extends Controller
         return response()->json(['status' => 'error', 'message' => 'Incorrect password'], 401);
     }
 
-    public function storeAbout(Request $request){
+    public function aboutussaveadm(Request $request){
         $admins = Admin::all();
 
         foreach($admins as $admin){
@@ -83,8 +86,9 @@ class AdminController extends Controller
         return response()->json(['status' => 'success', 'message' => 'Saved succesfully'], 200);
     }
 
-    public function aboutusapp(){
+    public function aboutusadmapp(){
         $admin = Admin::first();
-        return response()->json($admin);
+        // return response()->json($admin);
+        return csrf_token();
     }
 }

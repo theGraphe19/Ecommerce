@@ -32,8 +32,8 @@ Route::prefix('/admin')->group( function(){
 });
 
 Route::prefix('/app')->group( function(){
-    Route::post('/reg', 'AdminController@regapp');
-    Route::post('/login', 'AdminController@loginapp');
-    Route::post('/aboutsave', 'AdminController@storeAbout');
-    Route::get('/aboutusapp', 'AdminController@aboutusapp');
+    Route::post('/reg', 'AdminController@regadmapp');
+    Route::post('/login', 'AdminController@loginadmapp');
+    Route::post('/aboutsave', 'AdminController@aboutussaveadm');
+    Route::get('/aboutusapp', 'AdminController@aboutusadmapp');
 });

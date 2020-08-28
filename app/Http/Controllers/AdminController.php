@@ -8,6 +8,7 @@ use Illuminate\Hashing\BcryptHasher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Admin;
+use Validator;
 
 class AdminController extends Controller
 {
@@ -35,12 +36,17 @@ class AdminController extends Controller
 
         $adm = Admin::first();
 
-        $this->validate($request, [
+        $rules = [
             'name' => 'required|regex:/^[A-Za-z ]+$/',
             'phone' => 'required|min:8|max:10|unique:admins|regex:/^[0-9]+$/',
             'email' => 'required|email|unique:admins',
             'password' => 'required|regex:/^[^\W_]+$/|min:8|max:13',
-        ]);
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+        if($validator->fails()){
+            return response()->json($validator->errors(), 400);
+        }
 
         $name = $request->input('name');
         $phone = $request->input('phone');
@@ -60,7 +66,7 @@ class AdminController extends Controller
         ]);
 
         $admin->save();
-        return response()->json(['status' => 'success', 'message' => 'You are registered'], 200);
+        return response()->json(['status' => 'success', 'message' => 'You are registered as admin!'], 200);
     }
 
     public function loginadmapp(Request $request){

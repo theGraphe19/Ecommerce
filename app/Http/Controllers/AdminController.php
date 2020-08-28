@@ -87,6 +87,15 @@ class AdminController extends Controller
     }
 
     public function logoutadmapp(Request $request){
+        $rules = [
+            'api_token' => 'required',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+        if($validator->fails()){
+            return response()->json($validator->errors(), 400);
+        }
+        
         $api_token = $request->api_token;
         $user = Admin::where('api_token', $api_token)->first();
 

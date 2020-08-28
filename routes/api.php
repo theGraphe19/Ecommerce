@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::prefix('/admin')->group( function(){
     Route::post('/reg', 'AdminController@regadmapp');
     Route::post('/login', 'AdminController@loginadmapp');
+    Route::post('/logout', 'AdminController@logoutadmapp');
     Route::post('/aboutsave', 'AdminController@aboutussaveadm');
     Route::get('/aboutusapp', 'AdminController@aboutusadmapp');
 });

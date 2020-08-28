@@ -19,7 +19,7 @@ class AdminController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:admin')->except('loginadmapp', 'regadmapp', 'aboutusadmapp', 'aboutussaveadm');
+        $this->middleware('auth:admin')->except('loginadmapp', 'logoutadmapp', 'regadmapp', 'aboutusadmapp', 'aboutussaveadm');
     }
 
     /**
@@ -84,6 +84,19 @@ class AdminController extends Controller
             return response()->json(['status' => 'success', 'message' => 'Logged in succesfully'], 200);
         }
         return response()->json(['status' => 'error', 'message' => 'Incorrect password'], 401);
+    }
+
+    public function logoutadmapp(Request $request){
+        $api_token = $request->api_token;
+        $user = Admin::where('api_token', $api_token)->first();
+
+        if(!$user){
+            return response()->json(['status' => 'error', 'messege' => 'Not Logged in'], 401);
+        }
+
+        $user->api_token = null;
+        $user->save();
+        return response()->json(['status' => 'success', 'messege' => 'Logged out'], 200);
     }
 
     public function aboutussaveadm(Request $request){

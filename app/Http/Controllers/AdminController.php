@@ -95,11 +95,11 @@ class AdminController extends Controller
         if($validator->fails()){
             return response()->json($validator->errors(), 400);
         }
-        
+
         $api_token = $request->api_token;
         $user = Admin::where('api_token', $api_token)->first();
 
-        if(!$user){
+        if(is_null($user)){
             return response()->json(['status' => 'error', 'messege' => 'Not Logged in'], 401);
         }
 

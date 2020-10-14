@@ -21,6 +21,8 @@ class CreateAdminsTable extends Migration
             $table->string('password');
             $table->string('status');
             $table->string('api_token')->nullable();
+            $table->text('about_us')->nullable();
+            $table->string('about_us_img')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

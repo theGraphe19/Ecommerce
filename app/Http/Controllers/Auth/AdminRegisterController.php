@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Hashing\BcryptHasher;
 use Illuminate\Http\Request;
 use App\Admin;
 use Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Hashing\BcryptHasher;
 
 class AdminRegisterController extends Controller
 {

@@ -51,8 +51,8 @@ return [
     | your application so that it is used when running Artisan tasks.
     |
     */
-
-    'url' => env('APP_URL', 'https://developers.thegraphe.com/ecommerce/'),
+    'url' => "https://developers.thegraphe.com/ecommerce/",
+    // 'url' => env('APP_URL', 'http://localhost:8000/'),
 
     'asset_url' => env('ASSET_URL', null),
 

@@ -51,8 +51,8 @@ return [
     | your application so that it is used when running Artisan tasks.
     |
     */
-    'url' => "https://developers.thegraphe.com/ecommerce/",
-    // 'url' => env('APP_URL', 'http://localhost:8000/'),
+    // 'url' => "https://developers.thegraphe.com/ecommerce/",
+    'url' => env('APP_URL', 'http://localhost:8000/'),
 
     'asset_url' => env('ASSET_URL', null),
 
@@ -161,6 +161,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -226,6 +227,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Image' => Intervention\Image\Facades\Image::class,
 
     ],
 

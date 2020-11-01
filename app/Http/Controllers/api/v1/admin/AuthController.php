@@ -7,8 +7,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Hashing\BcryptHasher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use App\Admin;
 use Validator;
+use App\Admin;
+use Auth;
 
 class AuthController extends Controller
 {
@@ -26,22 +27,20 @@ class AuthController extends Controller
 
         $admin = Admin::where('email', $request->input('email'))->first();
         if(!$admin){
-            return response()->json(['status' => 'error', 'message' => 'Admin not found'], 404);
+            return response()->json(['status' => 'error', 'message' => 'Admin not found', 'data' => null], 404);
         }
 
         $pass = $request->input('password');
         if(password_verify ( $pass, $admin->password )){
             $admin->api_token = Str::random(60);
             $admin->save();
-            return response()->json(['status' => 'success', 'message' => 'Logged in succesfully'], 200);
+            return response()->json(['status' => 'success', 'message' => 'Logged in succesfully', 'data' => (object)['admin' => $admin, 'token' => $admin->api_token]], 200);
         }
-        return response()->json(['status' => 'error', 'message' => 'Incorrect password'], 401);
+        return response()->json(['status' => 'error', 'message' => 'Incorrect password', 'data' => null], 401);
     }
 
     public function reg(Request $request)
     {
-        // $adm = Admin::first();
-
         $rules = [
             'name' => 'required|regex:/^[A-Za-z ]+$/',
             'phone' => 'required|min:8|max:10|unique:admins|regex:/^[0-9]+$/',
@@ -70,6 +69,14 @@ class AuthController extends Controller
         ]);
 
         $admin->save();
-        return response()->json(['status' => 'success', 'message' => 'You are registered as admin!'], 200);
+        return response()->json(['status' => 'success', 'message' => 'You are registered as admin!', 'data' => (object)['admin' => $admin, 'token' => $admin->api_token]], 200);
+    }
+
+    public function logout()
+    {
+        $admin = Auth::user();
+        $admin->api_token = null;
+        $admin->save();
+        return response()->json(['status' => 'success', 'message' => 'Admin logged out!', 'data' => null], 200);
     }
 }
